@@ -20,8 +20,6 @@ nytprof.out
 /_eumm/
 local/
 cpanfile.snapshot
-css/
-images/
 .DS_Store
 tmp/cache
 database.db
