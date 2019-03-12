@@ -1,7 +1,9 @@
 package Jobeet::Controller::Job;
 use Ark 'Controller';
+
 with 'Ark::ActionClass::Form';
 
+use DateTime::Format::W3CDTF;
 use Jobeet::Models;
 
 sub index :Path {
@@ -18,6 +20,13 @@ sub show :Path :Args(1) {
 
     $c->stash->{job} = models('Schema::Job')->find({ token=> $job_token })
         or $c->detach('/default');
+
+    
+    my $history = $c->session->get('job_history') || [];
+
+    unshift @$history, { $c->stash->{job}->get_columns };
+
+    $c->session->set( job_history => $history );
 }
 
 # /job/create (新規作成)
@@ -75,6 +84,16 @@ sub delete :Chained('job') :PathPart :Args(0) {
 
     $c->stash->{job}->delete;
     $c->redirect( $c->uri_for('/job') );
+}
+
+sub atom :Local {
+    my ($self, $c) = @_;
+    $c->res->content_type('application/atom+xml; charset=utf-8');
+    $c->stash->{w3c_date} = DateTime::Format::W3CDTF->new;
+    $c->stash->{latest_post} = models('Schema::Job')->latest_post;
+    
+    $c->forward('index');
+
 }
 
 1;
