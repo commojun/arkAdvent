@@ -4,7 +4,7 @@ use Ark 'Form';
 use Jobeet::Models;
 
 param category => (
-    label   => 'Category',
+    label   => x('Category'),
     type    => 'ChoiceField',
     choices => [map { $_->slug => $_->name } models('Schema::Category')->all],
     constraints => [
@@ -85,6 +85,7 @@ param email => (
     type        => 'TextField',
     constraints => [
         'NOT_NULL',
+        'EMAIL_LOOSE',
     ],
 );
 
