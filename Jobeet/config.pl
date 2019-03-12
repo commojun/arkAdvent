@@ -3,10 +3,15 @@ my $home = Jobeet::Models->get('home');
 return {
     database => [
         'dbi:SQLite:' . $home->file('database.db'), '', '',
-         {
-             sqlite_unicode => 1,
-         },
+        {
+            sqlite_unicode => 1,
+        },
         ],
+
+    cache => {
+        share_file     => $home->file('tmp', 'cache')->stringify,
+        unlink_on_exit => 0,
+    },
     
     default_view    => 'MT',
     active_days     => 30,
