@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+? block javascripts => sub {
+  <script type="text/javascript" src="<?= $c->uri_for('/js/jquery-3.1.1.min.js') ?>"></script>
+  <script type="text/javascript" src="<?= $c->uri_for('/js/search.js') ?>"></script>
+? } # endblock javascripts
+
   <head>
     <title><? block title => sub { 'Jobeet - Your best job board' } ?></title>
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -7,6 +12,7 @@
           href="<?= $c->uri_for('/job/atom') ?>" />
     <? block javascripts => '' ?>
     <? block stylesheets => '' ?>
+
   </head>
   <body>
     <div id="container">
@@ -26,10 +32,11 @@
 
             <div class="search">
               <h2>Ask for a job</h2>
-              <form action="" method="get">
-                <input type="text" name="keywords"
-                  id="search_keywords" />
+              <form action="<?= $c->uri_for('/search') ?>" method="get">
+                <input type="text" name="q"
+                       id="search_keywords" />
                 <input type="submit" value="search" />
+                <img id="loader" src="<?= $c->uri_for('/images/loader.gif') ?>" style="vertical-align: middle; display: none" />
                 <div class="help">
                   Enter some keywords (city, country, position, ...)
                 </div>
