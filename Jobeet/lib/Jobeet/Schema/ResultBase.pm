@@ -3,6 +3,8 @@ use v5.22.2;
 use strict;
 use warnings;
 use parent 'DBIx::Class';
+use JSON qw/to_json from_json/;
+
 
 __PACKAGE__->load_components(qw/InflateColumn::DateTime Core/);
 
@@ -24,6 +26,21 @@ sub update {
     }
 
     $self->next::method(@_);
+}
+
+sub inflate_json_column {
+    my $pkg = shift;
+    my @columns = @_;
+
+    for my $column (@columns) {
+        $pkg->inflate_column(
+            $column,
+            {
+                inflate => sub { my $p = shift; $p && from_json($p); },
+                deflate => sub { my $p = shift; $p && to_json($p); },
+            }
+        );
+    }
 }
 
 1;
