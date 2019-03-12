@@ -1,4 +1,5 @@
 requires 'Ark';
+requires 'Ark::Plugin::I18N';
 requires 'Cache::FastMmap';
 requires 'CGI::Simple';
 requires 'Data::Page::Navigation';
@@ -10,6 +11,8 @@ requires 'DBIx::Class';
 requires 'Digest::SHA1';
 requires 'FindBin::libs';
 requires 'File::Temp';
+requires 'JSON::Any';
+requires 'Locale::Maketext::Lexicon';
 requires 'SQL::Translator';
 requires 'String::CamelCase';
 requires 'Test::More';

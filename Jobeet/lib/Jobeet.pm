@@ -9,6 +9,8 @@ use_plugins qw{
     Session
     Session::State::Cookie
     Session::Store::Model
+
+    I18N
 };
 
 config 'Plugin::Session' => {

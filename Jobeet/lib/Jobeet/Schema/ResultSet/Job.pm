@@ -45,4 +45,20 @@ sub latest_post {
     $r->first;
 }
 
+# day18 検索機能の追加
+sub search_fulltext {
+    my ($self, $word) = @_;
+
+    my $r = $self->search(
+        {
+            is_activated => 1,
+            -or          => [
+                { description  => { -like => "%${word}%", } },
+                { how_to_apply => { -like => "%${word}%", } },
+            ]
+        },
+        { order_by => { -desc => 'created_at' }, rows => 20 }
+    );
+}
+
 1;
